@@ -24,6 +24,18 @@
                     <a href="/delete/{{ task.id }}">Delete</a>
                     <br>
                     <a href="/update/{{ task.id }}">Update</a>
+                
+                </td>
+                <td>
+                    <form action="/completed/{{ task.id }}" method="POST" style="display:inline;">
+                        <input type="hidden" name="_method" value="POST">
+                        <input type="checkbox" name="completed" onchange="this.form.submit()" {% if task.completed %}checked{% endif %}>
+                        {% if task.completed %}
+                            <strike>{{ task.description }}</strike>
+                        {% else %}
+                            {{ task.description }}
+                        {% endif %}
+                    </form>
                 </td>
             </tr>
         {% endfor %}

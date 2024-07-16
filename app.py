@@ -10,6 +10,7 @@ class Todo(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     content = db.Column(db.String(200), nullable = False)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
+    completed = db.Column(db.Boolean, default=False)
     
 
     def __repr__(self):
@@ -60,5 +61,17 @@ def update(id):
 
     else:
         return render_template('update.html' , task=task)
+
+@app.route("/completed/<int:id>",methods = ['POST'])
+def completed(id):
+    task = Todo.query.get(id)
+    if task:
+        task.completed = not task.completed
+        if 'completed' in request.form:
+            task.completed = True
+        else:
+            task.completed = False
+        db.session.commit()
+    return redirect('/')
 if __name__ =="__main__":
     app.run(debug=True)
