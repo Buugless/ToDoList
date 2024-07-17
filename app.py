@@ -73,5 +73,12 @@ def completed(id):
             task.completed = False
         db.session.commit()
     return redirect('/')
+@app.route('/login', methods = ['POST','GET'])
+def login():
+    return render_template ('login.html')
+
+@app.route('/signup', methods = ['POST','GET'])
+def signup():
+    return render_template ('signup.html')
 if __name__ =="__main__":
     app.run(debug=True)
